@@ -18,11 +18,17 @@ import com.hotelbooking.model.Booking;
 import com.hotelbooking.model.Room;
 import com.hotelbooking.model.SearchResults;
 
-
+/**
+ * This is the Main class which takes in no. of pax, 
+ * searches for the best room combinations based on price and pax occupancy 
+ * and retrieves the cheapest price options available.
+ * 
+ * @author ruchi
+ * @version 1.0
+ */
 public class HotelBooking {
 
 	static int topResultsLimit = 3; // this can be changed to get the top N results
-	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);		
@@ -59,11 +65,15 @@ public class HotelBooking {
 		
 	}
 	
+	/*
+	 * validates the input. Check if pax entered as integer
+	 * @param pax This is the number of guests
+	 * @return boolean This returns true if input is valid.
+	 */
 	public static boolean validateInput(int pax) {
 		if(Integer.valueOf(pax) < 0) {
 			return false;
 		}
-		
 		return true;	
 	}
 	
@@ -71,6 +81,9 @@ public class HotelBooking {
 	/*
 	 * this is the main method to retrieve the top N search results
 	 * N can be changed by assigned the value to instance var - topResultsLimit
+	 * @param pax This is the number of guests
+	 * @param roomsList Available list of rooms
+	 * @return List<SearchResults> This returns list of top search results.
 	 */
 	public static List<SearchResults> allocateRooms(int pax, List<Room> roomsList) {
 		List<SearchResults> topSearchResults = new ArrayList<SearchResults>();
@@ -125,6 +138,7 @@ public class HotelBooking {
 					}
 					// search for next best option
 				}
+				
 				if((i == roomsList.size()-1 && guests > 0) || guests <= 0) {
 					//loop over again after rotation
 				
@@ -158,6 +172,8 @@ public class HotelBooking {
 	
 	/*
 	 * get the top N results. This number can be changed by changing topResultsLimit
+	 * @param topSearchResults All possible search results
+	 * @return List<SearchResults> This returns list of top N search results. N is customizable.
 	 */
 	private static List<SearchResults> getTopNsearchResults(List<SearchResults> topSearchResults) {
 		
@@ -172,6 +188,9 @@ public class HotelBooking {
 
 	/*
 	 * check before allotting a room if there is any room available for remaining guests
+	 * @param int This is the number of guests remaining
+	 * @param list List of all rooms
+	 * @return boolean This returns true if while allotting rooms with pax, room exists for the remaining guests as well.
 	 */
 	private static boolean anyRoomsExistsForRemainingPax(int guests, List<Room> list) {
 		if(guests <= 0) {
@@ -185,6 +204,13 @@ public class HotelBooking {
 		return false;
 	}
 	
+	/*
+	 * check if same booking (List of Rooms with pax) already exists,
+	 * then no need to add it again.
+	 * @param results This is list of bookings already exists
+	 * @param searchFor new bookings list
+	 * @return boolean This returns true same record already exists
+	 */
 	private static boolean sameBookingExists(List<SearchResults> results, List<Booking> searchFor) {
 		
 		for(SearchResults record : results) {
@@ -206,9 +232,11 @@ public class HotelBooking {
 	/*
 	 * rooms data is currently added in file.
 	 * this can later be taken from database.
+	 * @return List<Room> All Rooms are added to this list object
 	 */
 	public static List<Room> initializeRoomsDB() throws ParseException, IOException {
         FileInputStream fs = new FileInputStream("src/roomsDB.txt");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
         String line;
         Room room;

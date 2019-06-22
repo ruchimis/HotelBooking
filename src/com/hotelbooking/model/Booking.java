@@ -1,5 +1,14 @@
 package com.hotelbooking.model;
 
+/**
+ * Booking object contains the alloted room details 
+ * with occupancy and price (pp/pu).
+ * This class implements Comparable interface which sorts 
+ * Booking - first on the basis of price and then on the basis of no. of pax in the room.
+ *  
+ * @author ruchi
+ * @version 1.0
+ */
 public class Booking implements Comparable< Booking > {
 	private String roomType;
 	private int pax;
@@ -36,6 +45,9 @@ public class Booking implements Comparable< Booking > {
 	public String getRoomType() {
 		return roomType;
 	}
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
 	
 	@Override
 	public int compareTo(Booking obj) {
@@ -50,10 +62,6 @@ public class Booking implements Comparable< Booking > {
 	@Override
 	public String toString() {
 		return "[roomType=" + roomType + ", pax=" + pax + ", price=" + String.format("%.02f", pricePerPerson) + "/" + priceModel + "]\n";
-	}
-	
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
 	}
 	
 	

@@ -2,6 +2,14 @@ package com.hotelbooking.model;
 
 import java.util.Date;
 
+/**
+ * Room object load the data from file.
+ * This class implements Comparable interface 
+ * which sorts all rooms based on price (pp/pu)
+ *  
+ * @author ruchi
+ * @version 1.0
+ */
 public class Room implements Comparable< Room > {
 	
 	private Long id;
